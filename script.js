@@ -41,17 +41,17 @@ d3.csv('zomato.csv', function (restaurants) {
     let rating = Number(r["Aggregate rating"])
     return colorScale(rating)
   })
-  .attr('stroke', 'grey')
+  .attr('stroke', 'white')
   .on('mouseover', function(r) {
     dynamicColor = this.style.fill
     d3.select(this)
     // .style('fill', 'orangered')
-    .style('opacity', 0.3)
+    .style('opacity', 0.6)
 
     d3.transition()
     .duration(200)
     .style("opacity", 1);
-    div.html(r["Restaurant Name"] + '</br>' + r["Aggregate rating"])
+    div.html(r["Restaurant Name"] + '</br>' + r["Aggregate rating"] + '⭐️')
     .style("left", (d3.event.pageX) + "px")
     .style("top", (d3.event.pageY - 28) + "px")
   })
@@ -63,21 +63,20 @@ d3.csv('zomato.csv', function (restaurants) {
     .duration(500)
   })
 
-
   svg.selectAll('rating')
   .data(top10)
   .enter()
   .append('text')
   .attr('class', 'rating')
   .attr('x', (r, i) => {
-    return i * 150 + 15
+    return i * 150 + 7
   })
   .attr('y', (r,i) => {
     let rating = Number(r["Aggregate rating"])
-    return 600 - yScale(rating) - 5
+    return 600 - yScale(rating) - 10
   })
   .text((r) => {
-    return r["Aggregate rating"]
+    return r["Aggregate rating"] + '⭐️'
   })
 
   svg.selectAll('name')
@@ -98,4 +97,5 @@ d3.csv('zomato.csv', function (restaurants) {
   .text((r) => {
     return r["Restaurant Name"]
   })
+
 })
