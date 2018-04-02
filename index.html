@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href="https://fonts.googleapis.com/css?family=Merriweather" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
+  <title>LOTR Characters</title>
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <script src="https://d3js.org/d3-collection.v1.min.js"></script>
+  <script src="https://d3js.org/d3-hierarchy.v1.min.js"></script>
+  <script src="https://d3js.org/d3-transition.v1.min.js"></script>
+</head>
+<style>
+body {
+  background-color: #676B8B;
+}
+
+.main {
+  margin: 50px 0px;
+  text-align: center;
+}
+
+h1 {
+  color: #EFEFE9;
+  font-family: 'Merriweather', serif;
+  padding-top: 30px;
+  padding-bottom: 50px;
+  letter-spacing: 2px;
+}
+
+circle.node.node--root {
+  fill: #473F45;
+}
+
+circle.node {
+  fill: #7E7A78;
+}
+
+circle.node--leaf {
+  fill: #D1CAC6;
+}
+.node {
+  cursor: pointer;
+}
+
+.node:hover {
+  stroke: #000;
+  stroke-width: 1.5px;
+}
+
+.label {
+  font: 15px 'Roboto Slab', serif;
+  font-weight: 700;
+  text-anchor: middle;
+  /* text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff; */
+  letter-spacing: 1px;
+}
+
+.label,
+.node--root,
+.node--leaf {
+  pointer-events: none;
+}
+</style>
+<body>
+  <div class="main">
+    <h1>Lord Of The Rings Characters</h1>
+    <svg width="960" height="960"></svg>
+    <script src="zoom.js"></script>
+  </div>
+</body>
+</html>
