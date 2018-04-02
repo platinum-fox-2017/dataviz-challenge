@@ -25,15 +25,24 @@ const bubble = function () {
       .attr('width', width)
       .attr('height', height)
 
+    let colorCircles = d3.scaleOrdinal(d3.schemeCategory20)
+      .domain(['PC', 'SNES', 'NES', 'PS4', 'X360', '3DS', 'PS2', 'N64', 'DS', 'Wii', 'PS3', 'GB', 'GBA', '2600', 'PSP', 'PS']);
+
+    let scaleRadius = d3.scaleLinear()
+      .domain([d3.min(data, function(d) { return +d.Global_Sales; }),
+        d3.max(data, function(d) { return +d.Global_Sales; })])
+      .range([10,35]);
+
     var simulation = d3.forceSimulation(data)
-      .force("charge", d3.forceManyBody().strength([-200]))
-      .force("x", d3.forceX())
-      .force("y", d3.forceY())
+      .force("charge", d3.forceManyBody().strength([-40]))
+      .force("x", d3.forceX(0))
+      .force("y", d3.forceY(0))
+      .force('collide', d3.forceCollide().radius(function(d) {return scaleRadius(d.Global_Sales) + 2}).iterations(2) )
       .on("tick", ticked);
 
-    function ticked(e) {
+    function ticked() {
       text.attr('x', function(d) {
-        return d.x - 15
+        return d.x - (d.Platform.length * 4)
       })
       .attr('y', function(d) {
         return d.y + 5
@@ -45,13 +54,6 @@ const bubble = function () {
         return d.y;
       });
     }
-
-    let colorCircles = d3.scaleOrdinal(d3.schemeCategory10);
-
-    let scaleRadius = d3.scaleLinear()
-      .domain([d3.min(data, function(d) { return +d.Global_Sales; }),
-        d3.max(data, function(d) { return +d.Global_Sales; })])
-      .range([30,50]);
 
     let tooltip = div.append('div')
       .style("position", "absolute")
@@ -100,8 +102,8 @@ const bubble = function () {
       .enter()
       .append('text')
       .attr('transform', 'translate(' + [width/2, height/2] + ')')
-      .style("text-align", "center")
       .style("font-family", "monospace")
+      .style('pointer-events', 'none')
       .text(function(d) {
         return d.Platform
       })
@@ -131,8 +133,8 @@ const bubble = function () {
 
 
 d3.csv('./vgsales.csv', function(games) {
-  const shortList = games.slice(0, 100)
+  const shortList = games.slice(0, 600)
   console.log(shortList);
-  let chart = bubble().width(1000).height(1000);
+  let chart = bubble().width(800).height(800);
   d3.select('#Data').datum(shortList).call(chart)
 })
