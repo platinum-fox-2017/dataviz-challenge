@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Data Visualization</title>
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <style>
+    html {
+      background: url('jakarta-city.jpg');
+      background-size: 1900px;
+      background-repeat: no-repeat;
+      object-fit: cover;
+      background-color: black;
+    }
+    .title {
+      font-family: Helvetica, Arial, sans-serif;
+      font-size: 50px;
+      font-weight: 100;
+      text-align: center;
+      margin: 1em 0;
+      color: white;
+    }
+
+    .contain {
+      margin: 4em 5em;
+      padding: 20px;
+      position: relative;
+      height: 35em;
+    }
+
+    .restaurant {
+      font-family: Helvetica, Arial, sans-serif;
+      text-align: center;
+      text-anchor: middle;
+      vertical-align: center;
+      overflow-wrap: break-word;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      transition: all 0.5s ease-in-out;
+      cursor: pointer;
+      height: 50vw;
+      width: 80vw;
+    }
+
+    .restaurant:hover {
+      background-color: silver;
+      color:white;
+    }
+    
+    .header {
+      display:grid;
+      grid-template-columns: 8fr 1fr;
+    }
+
+    @media all and (max-width: 1000px) {
+      .header {
+        grid-template-columns: auto;
+      }
+    }
+    .legend {
+      padding-top: 2em;
+      font-family: Helvetica, Arial, sans-serif;
+      font-weight: 100;
+      color: white;
+      width: 350px;
+      height: 100px;
+      text-align: center;
+      text-shadow: 1px 1px silver;
+      margin: 0 auto;
+    }
+    .keys {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding: 10px;
+      text-shadow: none;
+    }
+    span {
+      width: 20px;
+      height: 5px;
+      background: linear-gradient(to right,rgba(255, 56, 56, 0.946), #f3e73b, rgb(63, 126, 0));
+      /* border: 1px solid silver; */
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="title">Jakarta's Restaurant Popularity</div>
+    <div class="legend">
+      <div class="legend-title">Legend</div>
+      <div class="keys">
+        <div class="key-title">Popularity/Size</div>
+        <div class="key-value">0 - 2000 (votes)</div>
+      </div>
+      <div class="keys">
+        <div class="key-title"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></div>
+        <div class="key-value">1.00 - 5.00</div>
+      </div>
+    </div>
+  </div>
+  <div class="contain"></div>
+  <script>
+    d3.json('/zomato-restaurants-data/file1.json', (resto) => {
+      let filtered = []
+      resto.map(rest => {
+        if (rest.restaurants) {
+          rest.restaurants.map(res => {
+            if (res.restaurant.currency === 'IDR') {
+              filtered.push(res)
+            }
+          })
+        }
+      })
+      console.log(filtered)
+      d3.select('.contain').selectAll('.restaurant')
+        .data(filtered)
+        .enter()
+        .append('div')
+        .attr('class', 'restaurant')
+        .attr('title', (restaurant) => {
+          return `${restaurant.restaurant.name} \nvotes: ${restaurant.restaurant.user_rating.votes}`
+        })
+        .transition()
+        .duration(500)
+        .delay(function (d, i) {
+          return i * 80
+        })
+        .style('height', (restaurant) => {
+          return restaurant.restaurant.user_rating.votes/8 + 'px'
+        })
+        .style('width', (restaurant) => {
+          return restaurant.restaurant.user_rating.votes/8 + 'px'
+        })
+        .style('border-radius', '50%')
+        .style('background-color', (restaurant) => {
+          return '#' + restaurant.restaurant.user_rating.rating_color
+        })
+        .style('font-size', (restaurant) => {
+          return  restaurant.restaurant.user_rating.votes/700 + 'vw'
+        })
+        .style('opacity', '0.9')
+        .style('position', 'absolute')
+        .style('top', (restaurant) => {
+          return (Math.random() * 100) + '%'
+        })
+        .style('left', (restaurant) => {
+          return (Math.random() * 80) + '%'
+        })
+        .text(function (restaurant) {
+          return restaurant.restaurant.name
+        })
+      })
+    
+  </script>
+</body>
+</html>
