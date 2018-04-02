@@ -1,0 +1,21 @@
+, Rank,Company,Country,Sales,Profits,Assets,Market Value,Sector,Industry
+,1,ICBC,China,151.4,42,3473.2,229.8,Financials,Major Banks
+,2,China Construction Bank,China,134.2,35,3016.6,200.5,Financials,Regional Banks
+,3,Berkshire Hathaway,United States,222.9,24.1,620.9,409.9,Financials,Investment Services
+,4,JPMorgan Chase,United States,102.5,24.2,2513,306.6,Financials,Major Banks
+,5,Wells Fargo,United States,97.6,21.9,1943.4,274.4,Financials,Major Banks
+,6,Agricultural Bank of China,China,115.7,27.8,2816,149.2,Financials,Regional Banks
+,7,Bank of America,United States,92.2,16.6,2196.8,231.9,Financials,Major Banks
+,8,Bank of China,China,113.1,24.9,2611.5,141.3,Financials,Major Banks
+,9,Apple,United States,217.5,45.2,331.1,752,Information Technology,Computer Hardware
+,10,Toyota Motor,Japan,249.9,17.1,412.5,171.9,Consumer Discretionary,Auto & Truck Manufacturers
+,11,AT&T,United States,163.8,13,403.8,249.3,Telecommunication Services,Telecommunications services
+,12,Citigroup,United States,84,14.7,1795.1,164.3,Financials,Major Banks
+,13,Exxon Mobil,United States,197.5,7.8,330.3,343.2,Energy,
+,14,General Electric,United States,119.7,10,365.2,261.2,Industrials,Conglomerates
+,15,Samsung Electronics,South Korea,174,19.3,217.1,254.3,Information Technology,Semiconductors
+,16,Ping An Insurance Group,China,106.6,9.5,801,100.8,Financials,Diversified Insurance
+,17,Wal-Mart Stores,United States,485.3,13.6,198.8,221.1,Consumer Discretionary,Discount Stores
+,18,Verizon Communications,United States,126,13.1,244.2,198.4,Telecommunication Services,Telecommunications services
+,19,Microsoft,United States,85.3,16.8,224.6,507.5,Information Technology,Software & Programming
+,20,Royal Dutch Shell,Netherlands,234.8,4.7,411.3,228.8,Energy,Oil & Gas Operations

@@ -1,0 +1,13 @@
+.bar{
+  fill: lightgreen;
+}
+
+.bar:hover {
+  fill: green;
+}
+
+
+/* .tick {
+  transform: rotate(90deg);
+	transform-origin: left top 0;
+} */
