@@ -1,0 +1,101 @@
+, Rank,Company,Country,Sales,Profits,Assets,Market Value,Sector,Industry
+,1,ICBC,China,151.4,42,3473.2,229.8,Financials,Major Banks
+,2,China Construction Bank,China,134.2,35,3016.6,200.5,Financials,Regional Banks
+,3,Berkshire Hathaway,United States,222.9,24.1,620.9,409.9,Financials,Investment Services
+,4,JPMorgan Chase,United States,102.5,24.2,2513,306.6,Financials,Major Banks
+,5,Wells Fargo,United States,97.6,21.9,1943.4,274.4,Financials,Major Banks
+,6,Agricultural Bank of China,China,115.7,27.8,2816,149.2,Financials,Regional Banks
+,7,Bank of America,United States,92.2,16.6,2196.8,231.9,Financials,Major Banks
+,8,Bank of China,China,113.1,24.9,2611.5,141.3,Financials,Major Banks
+,9,Apple,United States,217.5,45.2,331.1,752,Information Technology,Computer Hardware
+,10,Toyota Motor,Japan,249.9,17.1,412.5,171.9,Consumer Discretionary,Auto & Truck Manufacturers
+,11,AT&T,United States,163.8,13,403.8,249.3,Telecommunication Services,Telecommunications services
+,12,Citigroup,United States,84,14.7,1795.1,164.3,Financials,Major Banks
+,13,Exxon Mobil,United States,197.5,7.8,330.3,343.2,Energy,
+,14,General Electric,United States,119.7,10,365.2,261.2,Industrials,Conglomerates
+,15,Samsung Electronics,South Korea,174,19.3,217.1,254.3,Information Technology,Semiconductors
+,16,Ping An Insurance Group,China,106.6,9.5,801,100.8,Financials,Diversified Insurance
+,17,Wal-Mart Stores,United States,485.3,13.6,198.8,221.1,Consumer Discretionary,Discount Stores
+,18,Verizon Communications,United States,126,13.1,244.2,198.4,Telecommunication Services,Telecommunications services
+,19,Microsoft,United States,85.3,16.8,224.6,507.5,Information Technology,Software & Programming
+,20,Royal Dutch Shell,Netherlands,234.8,4.7,411.3,228.8,Energy,Oil & Gas Operations
+,21,Allianz,Germany,115.7,7.6,935.9,83.7,Financials,Diversified Insurance
+,22,China Mobile,Hong Kong,106.8,16.4,218.9,225.3,Telecommunication Services,Telecommunications services
+,23,BNP Paribas,France,74.7,8.4,2190.7,80.5,Financials,Major Banks
+,24,Alphabet,United States,89.9,19.5,167.5,579.5,Information Technology,
+,25,China Petroleum & Chemical,China,255.7,7,216.7,105.1,Energy,
+,26,Total,France,128.1,6.2,231,128.1,Energy,Oil & Gas Operations
+,27,AXA Group,France,132.2,6.2,925.9,60.8,Financials,Diversified Insurance
+,28,Daimler,Germany,169.5,9.4,256.3,76.1,Consumer Discretionary,Auto & Truck Manufacturers
+,29,Volkswagen Group,Germany,240.3,5.7,458.7,72.9,Consumer Discretionary,Auto & Truck Manufacturers
+,30,Mitsubishi UFJ Financial,Japan,49.2,8.2,2589.8,83.9,Financials,Major Banks
+,31,Comcast,United States,80.4,8.7,180.5,193.5,Consumer Discretionary,Broadcasting & Cable
+,32,Johnson & Johnson,United States,71.9,16.4,141.2,338.6,Health Care,Medical Equipment & Supplies
+,33,Banco Santander,Spain,48.3,6.9,1412.4,89.4,Financials,Major Banks
+,34,Bank of Communications,China,53,10.1,1209.2,62.2,Financials,Major Banks
+,35,Nestle,Switzerland,90.8,8.7,129.8,229.5,Consumer Staples,Food Processing
+,36,UnitedHealth Group,United States,184.9,7.2,125,160.2,Health Care,Managed Health Care
+,37,Nippon Telegraph & Tel,Japan,105,7.4,180.3,92.2,Telecommunication Services,Telecommunications services
+,38,Itaú Unibanco Holding,Brazil,61.3,6.7,419.9,79.2,Financials,
+,39,Softbank,Japan,82.1,8.3,213.2,78.6,Telecommunication Services,Telecommunications services
+,40,Gazprom,Russia,91.4,12.1,265.4,51.8,Energy,Oil & Gas Operations
+,41,General Motors,United States,166.4,9.4,221.7,50.8,Consumer Discretionary,Auto & Truck Manufacturers
+,42,China Merchants Bank,China,44.5,9.4,855.1,66.4,Financials,Major Banks
+,43,IBM,United States,79.9,11.9,117.5,162.4,Information Technology,Computer Services
+,44,Royal Bank of Canada,Canada,35.3,8.3,891.1,107.2,Financials,Major Banks
+,45,Japan Post Holdings,Japan,123.7,3.1,2522.1,55.1,Consumer Discretionary,
+,46,Procter & Gamble,United States,65.2,9.5,117,228.1,Consumer Staples,Household/Personal Care
+,47,Pfizer,United States,52.8,7.1,171.6,203.1,Health Care,Pharmaceuticals
+,48,HSBC Holdings,United Kingdom,62.1,2.5,2375,162.6,Financials,Major Banks
+,49,Goldman Sachs Group,United States,36.9,7.4,860.2,90.6,Financials,Investment Services
+,50,Siemens,Germany,88.4,6.4,133.1,109.8,Industrials,Conglomerates
+,51,BMW Group,Germany,104.2,7.6,210.3,57.7,Consumer Discretionary,Auto & Truck Manufacturers
+,52,China Life Insurance,China,82.8,2.9,388.7,98.1,Financials,Life & Health Insurance
+,53,ING Group,Netherlands,53.6,5.1,891.3,57.9,Financials,Life & Health Insurance
+,54,Intel,United States,59.4,10.3,113.3,170.4,Information Technology,Semiconductors
+,55,Postal Savings Bank Of China,China,48,6,1189.4,55.2,Financials,
+,56,Sberbank,Russia,43,8.1,415.6,63.9,Financials,Regional Banks
+,57,TD Bank Group,Canada,31.9,6.9,910.4,92,Financials,Major Banks
+,58,Cisco Systems,United States,48.6,9.8,126.2,165.1,Information Technology,Communications Equipment
+,59,Commonwealth Bank,Australia,30.9,7.1,703.6,109.9,Financials,Major Banks
+,60,Morgan Stanley,United States,37.9,6,816,78.3,Financials,Investment Services
+,61,Novartis,Switzerland,48.5,6.7,130.4,193.2,Health Care,Pharmaceuticals
+,62,Banco Bradesco,Brazil,70.2,4.3,362.4,53.5,Financials,Regional Banks
+,63,Industrial Bank,China,44.3,8.1,872.1,45.1,Financials,Regional Banks
+,64,Ford Motor,United States,151.8,4.6,238,44.7,Consumer Discretionary,Auto & Truck Manufacturers
+,65,Shanghai Pudong Development,China,40.1,8,842.8,50.5,Financials,Regional Banks
+,66,CVS Health,United States,177.5,5.3,94.5,79.8,Financials,
+,67,Walt Disney,United States,54.9,9,91.6,178,Consumer Discretionary,Broadcasting & Cable
+,68,Prudential,United Kingdom,96.9,2.6,569,53.7,Financials,Life & Health Insurance
+,69,Prudential Financial,United States,56.3,4.3,784,45.6,Financials,Life & Health Insurance
+,70,Oracle,United States,37.4,8.9,125.4,182.2,Information Technology,Software & Programming
+,71,China State Construction Engineering,China,140.8,4.9,201.4,43.2,Industrials,
+,72,Citic Pacific,Hong Kong,49.1,5.6,933.6,41.4,Materials,Iron & Steel
+,73,Boeing,United States,94.6,4.9,90,108.8,Industrials,Aerospace & Defense
+,74,Honda Motor,Japan,127.9,3.9,161.8,51.4,Consumer Discretionary,Auto & Truck Manufacturers
+,75,China Minsheng Banking,China,40.2,7.2,848.7,43.7,Financials,Regional Banks
+,76,Westpac Banking Group,Australia,27.8,5.5,642.7,86.1,Financials,Major Banks
+,77,Deutsche Telekom,Germany,80.9,3,156.6,80,Telecommunication Services,Telecommunications services
+,78,China Citic Bank,China,39.7,6.3,853.5,43.1,Financials,Regional Banks
+,79,Roche Holding,Switzerland,51.3,9.7,75.6,219.3,Health Care,Pharmaceuticals
+,80,UBS,Switzerland,38,3.4,920,60,Financials,Investment Services
+,81,Bank of Nova Scotia,Canada,26.7,5.5,680.3,70.5,Financials,Major Banks
+,82,Rosneft,Russia,74.9,2.7,193.2,62.4,Energy,Oil & Gas Operations
+,83,Amazon.com,United States,136,2.4,86,427,Consumer Discretionary,Internet & Catalog Retail
+,84,PepsiCo,United States,62.8,6.3,74.1,159.4,Consumer Staples,Beverages
+,85,Sumitomo Mitsui Financial,Japan,30.5,5.2,1648.8,48.1,Financials,Major Banks
+,86,Coca-Cola,United States,41.5,6.5,87.3,182.9,Consumer Staples,Beverages
+,87,United Technologies,United States,57.4,5,89.7,90.6,Industrials,Conglomerates
+,88,Sanofi,France,37.4,5.2,110.4,116.1,Health Care,Pharmaceuticals
+,89,Bayer,Germany,51.8,5,90.1,94.4,Materials,Diversified Chemicals
+,90,Mizuho Financial,Japan,29,6,1752.3,44.4,Financials,Major Banks
+,91,Zurich Insurance Group,Switzerland,67.3,3.2,364.3,40,Financials,Diversified Insurance
+,92,ANZ,Australia,26.5,4.2,701,68.8,Financials,Major Banks
+,93,BASF,Germany,63.7,4.5,83.9,91,Materials,Diversified Chemicals
+,94,Walgreens Boots Alliance,United States,116.1,4.2,72.5,89,Consumer Discretionary,
+,95,Nissan Motor,Japan,105.9,4.5,157.3,38.4,Consumer Discretionary,Auto & Truck Manufacturers
+,96,US Bancorp,United States,22,5.9,451,86.6,Financials,Major Banks
+,97,American Express,United States,34,5.4,158.9,70.1,Financials,Consumer Financial Services
+,98,Hon Hai Precision,Taiwan,135.2,4.6,80.4,54.4,Information Technology,Electronics
+,99,Enel,Italy,75.9,2.8,164.1,47.5,Utilities,Electric Utilities
+,100,Merck,United States,39.6,3.9,95.4,173.3,Health Care,Pharmaceuticals
