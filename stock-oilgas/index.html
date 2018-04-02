@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Indonesia</title>
+    <script src="https://d3js.org/d3.v4.min.js" charset="utf-8"></script>
+    <script src="https://d3js.org/topojson.v3.min.js"></script>
+    <link rel="stylesheet"  type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.3.2/css/bulma.min.css">
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+        padding-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 class="title has-text-centered">Pertamina Indonesia</h1>
+    <h2 class="subtitle has-text-centered">Demo Stock Oil Gas Station</h2>
+
+    <script type="text/javascript">
+      /*
+      references: 
+      https://medium.com/@andybarefoot/making-a-map-using-d3-js-8aa3637304ee
+      https://gist.github.com/grahamjenson/8192663
+      */
+
+      var width = 1024,
+          height = 600,
+          stockoil;
+
+      var colorRange = ["#1a9850", "#66bd63", "#a6d96a", "#d9ef8b", "#ffffbf", "#fee08b", "#fdae61", "#f46d43", "#d73027"];
+      var stockGas = [0, 100000, 200000, 300000, 500000, 750000, 1000000, 1500000, 2500000, 5000000];  
+
+      // Create SVG element
+      var svg = d3.select("body").insert("svg", "p")
+                  .attr("width", width)
+                  .attr("height", height * 0.8)
+                  .attr("class", "map");
+
+      // Projection and path
+      var projection = d3.geoMercator()
+                          .center([118.25, -5])
+                          .scale(width * 1.2)
+                          .translate([width / 2, height / 2]);
+
+      var path = d3.geoPath().projection(projection);
+
+      d3.json('data/IDN.json', function (error, data) {
+        // console.log('data map ====> ', data)
+        if (error) throw error;
+
+        var g = svg.append("g");
+
+        d3.csv('data/IDN.csv', function (error, spbu) {
+          console.log('spbu csv ===> ', spbu)
+          if (error) throw error;
+
+          // Draw the map
+          g.selectAll("path")
+            .attr("class", "city")
+            .data(topojson.feature(data, data.objects.IDN).features)
+            .enter()
+            .append("path")
+            .attr("d", path)
+            .attr("stroke", "black")
+            .attr("fill", "white")
+            .attr("fill", function(d) {
+              if (!d.properties.HASC_2) {
+                return "lightblue";
+              } else {
+                var idx = 0
+                var stockSPBU = spbu[d.properties.ID_2]
+                console.log('stockSPBU ===> ', stockSPBU)
+                console.log('spbu ===> ', spbu[d.properties.ID_2])
+
+                // for(let i = 0; i < stockGas.length; i++) {                  
+                  // if (i == stockGas.length) break;
+                  // console.log('loooping ==>>', val.stock, stockGas[i])
+                  // if (val.stock > stockGas[i] && val.stock < stockGas[i+1]) {
+                    // idx = i
+                    // console.log(idx)
+                    // break
+                  // }
+                // }
+              }
+            });
+
+          g.selectAll("path")
+            .append("title")
+            .text(function(d) {
+              // console.log(d.properties.NAME_2)
+              return d.properties.NAME_2
+            });
+        })
+      })
+
+
+      // Asynchronous tasks, load topojson map and data
+      // d3.queue()
+      //   .defer(d3.json, "data/IDN.json")
+      //   .defer(d3.csv, "data/IDN.csv")
+      //   .await(ready);
+
+      // // Callback function
+      // function ready(error, data, population) {
+      //   if (error) throw error;
+
+      //   // Population data
+      //   var populationData = {};
+
+      //   population.forEach(function(d) { populationData[d.id] = +d.population; });
+
+      //   // Color
+      //   var stockColor = d3.scaleThreshold()
+      //                           .domain(stockoil)
+      //                           .range(colorRange);
+
+      //   var g = svg.append("g");
+
+      //   // Draw the map
+      //   g.selectAll("path")
+      //     .attr("class", "city")
+      //     .data(topojson.feature(data, data.objects.IDN).features)
+      //     .enter()
+      //     .append("path")
+      //     .attr("d", path)
+      //     .attr("stroke", "black")
+      //     // .attr("stroke-width", "0.2")
+      //     .attr("fill", "white")
+      //     // .transition().duration(2000)
+      //     // .delay(function(d, i) { return i * 5; })
+      //     // .ease(d3.easeLinear)
+      //     .attr("fill", function(d) {
+      //       if (!d.properties.HASC_2) {
+      //         return "lightblue";
+      //       } else {
+      //         return stockColor(populationData[d.properties.ID_2]);
+      //       }
+      //     });
+
+      //   g.selectAll("path")
+      //     .append("title")
+      //     .text(function(d) {
+      //       return d.properties.NAME_2 + " : " + populationData[d.properties.ID_2];
+      //     });
+      // }
+
+      // d3.select(window).on("resize", resize);
+
+      // function resize() {
+      //   width = window.innerWidth;
+      //   height = window.innerHeight;
+
+      //   projection.scale(width * 1.2)
+      //             .translate([width / 2, height / 2]);
+
+      //   d3.select("svg")
+      //     .attr("width", width)
+      //     .attr("height", height * 0.8);
+
+      //   d3.selectAll("path")
+      //     .attr("d", path);
+      // }
+    </script>
+  </body>
+</html>
