@@ -34,7 +34,8 @@ d3.csv("population.csv", function(error, data) {
      .enter()
      .append("circle")
      .style('opacity', 0.1)
-     .transition()
+
+  circle .transition()
       .delay(function(d, i) {
         return i * 80 
       })
