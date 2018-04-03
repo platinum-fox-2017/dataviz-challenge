@@ -5,27 +5,36 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Data Visualization Fadhil Mochammad</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
   <script src="https://d3js.org/d3.v4.min.js"></script>
 </head>
 <body>
-  <h1>World CO2 Emission</h1>
+  <h1>Australia CO2 Emission</h1>
   <div id='graph'></div>
 </body>
 <script>
-  const width = 1000
-  const height = 600
+  var margin = {top: 20, right: 20, bottom: 30, left: 50}
+  var canvas_width = 1060 - margin.left - margin.right
+  var canvas_height = 500 - margin.top - margin.bottom
+  var width = canvas_width - 50
+  var height = canvas_height
 
   const canvas = d3.select('#graph').append('svg')
-    .attr('width', width)
-    .attr('height', height)
+    .attr('width', canvas_width+ margin.left + margin.right)
+    .attr('height', canvas_height+ margin.left + margin.right)
     .style('background', '#eceff1')
-    .style('margin-left', 100)
-  
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
   const g = canvas.append('g')
+    .attr("transform", "translate(" + 70 + "," + 25 + ")");
 
   // Scale range into canvas size
   var xScale = d3.scaleLinear().rangeRound([0,width])
   var yScale = d3.scaleLinear().rangeRound([height, 0])
+
+  var tooltip = d3.select("body").append("div")	
+    .attr("class", "tooltip")				
+    .style("opacity", 0);
 
 
   // Parse the data form input csv, to make sure that number is not string
@@ -77,45 +86,118 @@
     
     // Get the range of data for domain scaling
     xScale.domain(d3.extent(dataAustralia, function (d) {
-      return d.year
+      return d.year+''
     }))
 
     yScale.domain(d3.extent(dataAustralia, function (d) {
       return d.value
     }))
 
-     const lines = g.selectAll('path')
-    .data(dataAustralia)
-    .enter()
-    .append('path')
-    .attr("fill", "none")
-    .attr("stroke", "black")
-    .attr("stroke-linejoin", "round")
-    .attr("stroke-linecap", "round")
-    .attr("stroke-width", 3)
-    .attr('d', function (d, i) {
-      if(i <  dataAustralia.length-1) {
-        console.log(i)
-        console.log(dataAustralia[i+1])
-        return `M ${xScale(d.year)} ${yScale(d.value)} L ${xScale(dataAustralia[i+1].year)} ${yScale(dataAustralia[i+1].value)}`
-      }
-    })
 
+     const lines = g.selectAll('path')
+      .data(dataAustralia)
+      .enter()
+      .append('path')
+      .attr("fill", "none")
+      .attr("stroke", "black")
+      .attr("stroke-linejoin", "round")
+      .attr("stroke-linecap", "round")
+      .attr("stroke-width", 3)
+      // .attr('d', function (d, i) {
+      //   if(i <  dataAustralia.length-1) {
+      //     console.log(i)
+      //     console.log(dataAustralia[i+1])
+      //     return `M ${xScale(d.year)} ${yScale(d.value)} L ${xScale(dataAustralia[i+1].year)} ${yScale(dataAustralia[i+1].value)}`
+      //   }
+      // })
+      .transition()
+      .duration(1050)
+      .delay(function(d, i) { return i * 50; })
+      .attr('d', function (d, i) {
+        if(i <  dataAustralia.length-1) {
+          let indexData = dataAustralia.length - 1 - i
+          console.log(i)
+          return `M ${xScale(dataAustralia[indexData].year)} ${yScale(dataAustralia[indexData].value)} L ${xScale(dataAustralia[indexData - 1].year)} ${yScale(dataAustralia[indexData - 1].value)}`
+        }
+      })
+
+
+    g.append("g")
+        .attr("transform", "translate(0," + height + ")")
+        .call(d3.axisBottom(xScale))
+      .append('text')
+        .attr('fill', '#000')
+        .attr('y', 30)
+        .attr('x', 500)
+        .attr('font-weight', 'bold')
+        .text('year')
+      
+
+      // Add the Y Axis
+    g.append("g")
+        .call(d3.axisLeft(yScale))
+      .append('text')
+        .attr('fill', '#000')
+        .attr('y', -55)
+        .attr('x', -150)
+        .attr('font-weight', 'bold')
+        .attr('transform', 'rotate(-90) ')
+        .text('GHG per Capita')
+
+    
     // Add circle to canvas
-    const circles = g.selectAll('circle').data(dataAustralia)
-    circles.enter().append('circle')
+    const circles = g.selectAll('circle')
+      .data(dataAustralia)
+      .enter()
+      .append('circle')
       .attr('stroke','white')
       .attr('stroke-width', 3)
-      .attr('r', 6)
+      .attr('r', 0)
       .attr('cx', function (d) {
         return xScale(d.year)
       })
       .attr('cy', function (d) {
         return yScale(d.value)
       })
-
-   
+      .on("mouseover", function(d) {	
+          tooltip.transition()		
+              .duration(200)		
+              .style("opacity", .9);		
+          tooltip.html("<strong>Year: </strong>"+ d.year + "<br/><strong> Value:</strong> "  + parseInt(d.value))	
+              .attr("left", (d3.event.pageX) + "px")		
+              .attr("top", (d3.event.pageY - 28) + "px");	
+          })					
+      .on("mouseout", function(d) {		
+          tooltip.transition()		
+              .duration(500)		
+              .style  ("opacity", 0);	
+      })
+      .transition()
+      .duration(1050)
+      .delay(function(d, i) { return (dataAustralia.length - 1 - i) * 10; })
+      .attr('r', 7)
 
   })
 </script>
+<style>
+  h1 {
+    text-align: center;
+    font-weight: 100;
+    font-family: 'Roboto', sans-serif;
+    margin-top: 30px;
+  }
+
+  div.tooltip {
+    position: absolute;
+    text-align: center;
+    width: 60px;
+    height: 48px;
+    padding: 2px;
+    font: 12px sans-serif;
+    background: lightsteelblue;
+    border: 0px;
+    border-radius: 8px;
+    pointer-events: none;
+}
+</style>
 </html>
