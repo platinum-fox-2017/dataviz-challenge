@@ -1,5 +1,5 @@
 var width = 800,
-    height = 400;
+  height = 400;
 
 d3.csv('stack_network_links.csv', function (data) {
   const FirstTenData = data.splice(0,10)
@@ -8,8 +8,15 @@ d3.csv('stack_network_links.csv', function (data) {
   .attr('height', height)
 
   const yScale = d3.scaleLinear()
-  .domain([0, 50])
-  .range([0, 300])
+    .domain([0, 50])
+    .range([0, 300])
+
+  // defines scale based on possible values (domain) and expected size (range)
+  var scale = d3.scaleLinear()
+  .domain([100, 0 ])  // allows values from 0 to 100
+  .range([0, 340]);  // scaled to 0 to 700 pixels wide
+
+  var axis = d3.axisLeft(scale);
 
   var div = d3.select("body").append("div")
     .attr("class", "tooltip")
@@ -24,7 +31,6 @@ d3.csv('stack_network_links.csv', function (data) {
       return i * 75
     })
     .attr('y', (d) => {
-      // console.log(Math.floor(d.value))
       return height - yScale(Math.floor(d.value))
     })
     .attr('width', 50)
@@ -32,16 +38,15 @@ d3.csv('stack_network_links.csv', function (data) {
       return yScale(Math.floor(d.value))
     })
     .on('mouseover', function(data) {
-      console.log(data.source)
       dynamicColor = this.style.fill;
       d3.select(this)
       .style('fill', '#229954')
       div.transition()
-         .duration(200)
-         .style("opacity", .9);
-       div.html(data.source + '</br>' + Math.floor(data.value))
+          .duration(200)
+          .style("opacity", .9);
+        div.html(data.source + '</br>' + Math.floor(data.value))
         .style("left", (d3.event.pageX) + "px")
-        .style("top", (d3.event.pageY - 28) + "px");
+        .style("top", (d3.event.pageY - 28) + "px")
     })
     .on('mouseout', function(data) {
       d3.select(this)
@@ -50,7 +55,7 @@ d3.csv('stack_network_links.csv', function (data) {
       .duration(500)
       .style("opacity", 0);
     });
+  svg.append("g")
+    .attr("transform", "translate(30, 10)")
+    .call(axis);
 })
-
-
-
