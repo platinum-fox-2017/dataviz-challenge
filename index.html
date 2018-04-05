@@ -9,9 +9,16 @@
   <script src="https://d3js.org/d3.v4.min.js"></script>
 </head>
 <body>
-  <h1>Australia CO2 Emission</h1>
+  <h1>CO2 Emission Data Visualization</h1>
+  <div id='menu'>
+  </div>
   <div id='graph'></div>
 </body>
+<style>
+  h3, h1 {
+    margin-left: 120px;
+  }
+</style>
 <script>
   var margin = {top: 20, right: 20, bottom: 30, left: 50}
   var canvas_width = 1060 - margin.left - margin.right
@@ -23,10 +30,17 @@
     .attr('width', canvas_width+ margin.left + margin.right)
     .attr('height', canvas_height+ margin.left + margin.right)
     .style('background', '#eceff1')
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+  
 
-  const g = canvas.append('g')
+  const chart = canvas.append('g')
     .attr("transform", "translate(" + 70 + "," + 25 + ")");
+    
+
+  const menu = d3.select('#menu')
+    .append('h3')
+    .text('Choose country: ')
+
 
   // Scale range into canvas size
   var xScale = d3.scaleLinear().rangeRound([0,width])
@@ -77,105 +91,225 @@
       })
     })
     console.log(co2_data)
-
-    let dataAustralia = co2_data.filter(val => {
-      return val.country === 'Australia'
-    })[0].data
-
-    console.log(dataAustralia)
     
-    // Get the range of data for domain scaling
-    xScale.domain(d3.extent(dataAustralia, function (d) {
-      return d.year+''
-    }))
+    const onchange = function () {
+      country = d3.select('select').property('value')
+      
+      let dataSelected = co2_data.filter(val => {
+        return val.country === country
+      })[0].data
 
-    yScale.domain(d3.extent(dataAustralia, function (d) {
-      return d.value
-    }))
+         // Get the range of data for domain scaling
+      xScale.domain(d3.extent(dataSelected, function (d) {
+        return d.year+''
+      }))
 
+      yScale.domain(d3.extent(dataSelected, function (d) {
+        return d.value
+      }))
 
-     const lines = g.selectAll('path')
-      .data(dataAustralia)
-      .enter()
-      .append('path')
-      .attr("fill", "none")
-      .attr("stroke", "black")
-      .attr("stroke-linejoin", "round")
-      .attr("stroke-linecap", "round")
-      .attr("stroke-width", 3)
-      // .attr('d', function (d, i) {
-      //   if(i <  dataAustralia.length-1) {
-      //     console.log(i)
-      //     console.log(dataAustralia[i+1])
-      //     return `M ${xScale(d.year)} ${yScale(d.value)} L ${xScale(dataAustralia[i+1].year)} ${yScale(dataAustralia[i+1].value)}`
-      //   }
-      // })
-      .transition()
-      .duration(1050)
-      .delay(function(d, i) { return i * 50; })
-      .attr('d', function (d, i) {
-        if(i <  dataAustralia.length-1) {
-          let indexData = dataAustralia.length - 1 - i
-          console.log(i)
-          return `M ${xScale(dataAustralia[indexData].year)} ${yScale(dataAustralia[indexData].value)} L ${xScale(dataAustralia[indexData - 1].year)} ${yScale(dataAustralia[indexData - 1].value)}`
-        }
-      })
-
-
-    g.append("g")
-        .attr("transform", "translate(0," + height + ")")
-        .call(d3.axisBottom(xScale))
-      .append('text')
+      canvas.selectAll('.inner-chart').remove()
+      
+      const g = chart.append('g').attr('class','inner-chart')
+      
+      g.append('g')
+        .append('text')
         .attr('fill', '#000')
-        .attr('y', 30)
-        .attr('x', 500)
+        .attr('y', 0)
+        .attr('x', 450)
         .attr('font-weight', 'bold')
-        .text('year')
+        .attr('font-size', 30)
+        .attr('height', 1000)
+        .text(country)
+
+      const lines = g.selectAll('path')
+        .data(dataSelected)
+        .enter()
+        .append('path')
+        .attr("fill", "none")
+        .attr("stroke", "black")
+        .attr("stroke-linejoin", "round")
+        .attr("stroke-linecap", "round")
+        .attr("stroke-width", 3)
+        .transition()
+        .duration(1050)
+        .delay(function(d, i) { return i * 50; })
+        .attr('d', function (d, i) {
+          if(i <  dataSelected.length-1) {
+            let indexData = dataSelected.length - 1 - i
+            // console.log(i)
+            return `M ${xScale(dataSelected[indexData].year)} ${yScale(dataSelected[indexData].value)} L ${xScale(dataSelected[indexData - 1].year)} ${yScale(dataSelected[indexData - 1].value)}`
+          }
+        })
+
+
+      g.append("g")
+          .attr("transform", "translate(0," + height + ")")
+          .call(d3.axisBottom(xScale))
+        .append('text')
+          .attr('fill', '#000')
+          .attr('y', 30)
+          .attr('x', 500)
+          .attr('font-weight', 'bold')
+          .text('year')
+        
+
+        // Add the Y Axis
+      g.append("g")
+          .call(d3.axisLeft(yScale))
+        .append('text')
+          .attr('fill', '#000')
+          .attr('y', -55)
+          .attr('x', -150)
+          .attr('font-weight', 'bold')
+          .attr('transform', 'rotate(-90) ')
+          .text('GHG per Capita')
+
+      
+      // Add circle to canvas
+      const circles = g.selectAll('circle')
+        .data(dataSelected)
+        .enter()
+        .append('circle')
+        .attr('stroke','white')
+        .attr('stroke-width', 3)
+        .attr('r', 0)
+        .attr('cx', function (d) {
+          return xScale(d.year)
+        })
+        .attr('cy', function (d) {
+          return yScale(d.value)
+        })
+        .on("mouseover", function(d) {	
+            tooltip.transition()		
+                .duration(200)		
+                .style("opacity", .9);		
+            tooltip.html("<strong>Year: </strong>"+ d.year + "<br/><strong> Value:</strong> "  + parseInt(d.value))	
+                .attr("left", (d3.event.pageX) + "px")		
+                .attr("top", (d3.event.pageY - 28) + "px");	
+            })					
+        .on("mouseout", function(d) {		
+            tooltip.transition()		
+                .duration(500)		
+                .style  ("opacity", 0);	
+        })
+        .transition()
+        .duration(1050)
+        .delay(function(d, i) { return (dataSelected.length - 1 - i) * 10; })
+        .attr('r', 7)
+
+
+    }
+
+    const select = menu.append('select')
+      .attr('class', 'country') 
+      .on('change', onchange)
+
+    const options = select.selectAll('option')
+      .data(co2_data)
+      .enter()
+      .append('option')
+        .text(function(d) {
+          return d.country
+        })
+    
+
+    // let dataAustralia = co2_data.filter(val => {
+    //   return val.country === 'Australia'
+    // })[0].data
+
+    // // Get the range of data for domain scaling
+    // xScale.domain(d3.extent(dataAustralia, function (d) {
+    //   return d.year+''
+    // }))
+
+    // yScale.domain(d3.extent(dataAustralia, function (d) {
+    //   return d.value
+    // }))
+
+
+    //  const lines = g.selectAll('path')
+    //   .data(dataAustralia)
+    //   .enter()
+    //   .append('path')
+    //   .attr("fill", "none")
+    //   .attr("stroke", "black")
+    //   .attr("stroke-linejoin", "round")
+    //   .attr("stroke-linecap", "round")
+    //   .attr("stroke-width", 3)
+    //   // .attr('d', function (d, i) {
+    //   //   if(i <  dataAustralia.length-1) {
+    //   //     console.log(i)
+    //   //     console.log(dataAustralia[i+1])
+    //   //     return `M ${xScale(d.year)} ${yScale(d.value)} L ${xScale(dataAustralia[i+1].year)} ${yScale(dataAustralia[i+1].value)}`
+    //   //   }
+    //   // })
+    //   .transition()
+    //   .duration(1050)
+    //   .delay(function(d, i) { return i * 50; })
+    //   .attr('d', function (d, i) {
+    //     if(i <  dataAustralia.length-1) {
+    //       let indexData = dataAustralia.length - 1 - i
+    //       // console.log(i)
+    //       return `M ${xScale(dataAustralia[indexData].year)} ${yScale(dataAustralia[indexData].value)} L ${xScale(dataAustralia[indexData - 1].year)} ${yScale(dataAustralia[indexData - 1].value)}`
+    //     }
+    //   })
+
+
+    // g.append("g")
+    //     .attr("transform", "translate(0," + height + ")")
+    //     .call(d3.axisBottom(xScale))
+    //   .append('text')
+    //     .attr('fill', '#000')
+    //     .attr('y', 30)
+    //     .attr('x', 500)
+    //     .attr('font-weight', 'bold')
+    //     .text('year')
       
 
-      // Add the Y Axis
-    g.append("g")
-        .call(d3.axisLeft(yScale))
-      .append('text')
-        .attr('fill', '#000')
-        .attr('y', -55)
-        .attr('x', -150)
-        .attr('font-weight', 'bold')
-        .attr('transform', 'rotate(-90) ')
-        .text('GHG per Capita')
+    //   // Add the Y Axis
+    // g.append("g")
+    //     .call(d3.axisLeft(yScale))
+    //   .append('text')
+    //     .attr('fill', '#000')
+    //     .attr('y', -55)
+    //     .attr('x', -150)
+    //     .attr('font-weight', 'bold')
+    //     .attr('transform', 'rotate(-90) ')
+    //     .text('GHG per Capita')
 
     
-    // Add circle to canvas
-    const circles = g.selectAll('circle')
-      .data(dataAustralia)
-      .enter()
-      .append('circle')
-      .attr('stroke','white')
-      .attr('stroke-width', 3)
-      .attr('r', 0)
-      .attr('cx', function (d) {
-        return xScale(d.year)
-      })
-      .attr('cy', function (d) {
-        return yScale(d.value)
-      })
-      .on("mouseover", function(d) {	
-          tooltip.transition()		
-              .duration(200)		
-              .style("opacity", .9);		
-          tooltip.html("<strong>Year: </strong>"+ d.year + "<br/><strong> Value:</strong> "  + parseInt(d.value))	
-              .attr("left", (d3.event.pageX) + "px")		
-              .attr("top", (d3.event.pageY - 28) + "px");	
-          })					
-      .on("mouseout", function(d) {		
-          tooltip.transition()		
-              .duration(500)		
-              .style  ("opacity", 0);	
-      })
-      .transition()
-      .duration(1050)
-      .delay(function(d, i) { return (dataAustralia.length - 1 - i) * 10; })
-      .attr('r', 7)
+    // // Add circle to canvas
+    // const circles = g.selectAll('circle')
+    //   .data(dataAustralia)
+    //   .enter()
+    //   .append('circle')
+    //   .attr('stroke','white')
+    //   .attr('stroke-width', 3)
+    //   .attr('r', 0)
+    //   .attr('cx', function (d) {
+    //     return xScale(d.year)
+    //   })
+    //   .attr('cy', function (d) {
+    //     return yScale(d.value)
+    //   })
+    //   .on("mouseover", function(d) {	
+    //       tooltip.transition()		
+    //           .duration(200)		
+    //           .style("opacity", .9);		
+    //       tooltip.html("<strong>Year: </strong>"+ d.year + "<br/><strong> Value:</strong> "  + parseInt(d.value))	
+    //           .attr("left", (d3.event.pageX) + "px")		
+    //           .attr("top", (d3.event.pageY - 28) + "px");	
+    //       })					
+    //   .on("mouseout", function(d) {		
+    //       tooltip.transition()		
+    //           .duration(500)		
+    //           .style  ("opacity", 0);	
+    //   })
+    //   .transition()
+    //   .duration(1050)
+    //   .delay(function(d, i) { return (dataAustralia.length - 1 - i) * 10; })
+    //   .attr('r', 7)
 
   })
 </script>
