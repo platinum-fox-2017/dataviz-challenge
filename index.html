@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>    
+    body {
+      font: 10px sans-serif;
+    }
+    .axis path,
+    .axis line {
+      fill: none;
+      stroke: #000;
+      shape-rendering: crispEdges;
+    }
+
+    .bar {
+      fill: orange;
+    }
+
+    .bar:hover {
+      fill: orangered ;
+    }
+
+    .x.axis path {
+      display: none;
+    }
+
+    .d3-tip {
+      line-height: 1;
+      font-weight: bold;
+      padding: 12px;
+      background: rgba(0, 0, 0, 0.8);
+      color: #fff;
+      border-radius: 2px;
+    }
+
+    /* Creates a small triangle extender for the tooltip */
+    .d3-tip:after {
+      box-sizing: border-box;
+      display: inline;
+      font-size: 10px;
+      width: 100%;
+      line-height: 1;
+      color: rgba(0, 0, 0, 0.8);
+      content: "\25BC";
+      position: absolute;
+      text-align: center;
+    }
+
+    /* Style northward tooltips differently */
+    .d3-tip.n:after {
+      margin: -1px 0 0 0;
+      top: 100%;
+      left: 0;
+    }
+  </style>
+</head>
+<body>
+    <h1>
+      Happiness rank and scores by country, 2015
+    </h1>
+    <div id="area"></div>
+</body>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script>
+  const svg = d3.selectAll('#area')
+  .append('svg')
+  .attr('width', 1400)
+  .attr('height', 500)
+
+  const yScale = d3.scaleLinear()
+  .domain([6, 8])
+  .range([0, 500])
+
+  d3.csv("./2017.csv", function (data) {
+    const top10 = data.splice(0,10)
+    const colorScale = d3.scaleLinear()
+    .domain([7, 8])
+    .range(['yellow', 'orangered'])
+
+    const div = d3.select("body")
+    .append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 1);
+
+    svg.selectAll('rect')
+    .data(top10)
+    .enter()
+    .append('rect')
+    .attr('class', 'bar')
+
+    .attr('x', (r, i) => {
+      return i * 100
+    })
+    .attr('y', (r,i) => {
+    let score = Number(r["Happiness.Score"]).toFixed(2)
+    return 500 - yScale(score)
+    })
+    .attr('width', 50)
+    .attr('height', (r) => {
+      let score = Number(r["Happiness.Score"])
+      return yScale(score)
+    })
+    .attr('fill', (r) => {
+      let score = Number(r["Happiness.Score"])
+      return colorScale(score)
+    })
+    .attr('stroke', 'white')
+    .on('mouseover', function(r) {
+      dynamicColor = this.style.fill
+      d3.select(this)
+      .style('opacity', 1)
+
+      d3.transition()
+      .duration(200)
+      .style("opacity", 1);
+      
+      div.html(r["Country"] + '</br>' + Number(r["Happiness.Score"]).toFixed(2) + '⭐️')
+      .style("left", (d3.event.pageX) + "px")
+      .style("top", (d3.event.pageY - 200) + "px")
+    })
+
+    .on('mouseout', function(r) {
+    d3.select(this)
+    .style('fill', dynamicColor)
+    .style('opacity', 1)
+    div.transition()
+    .duration(500)
+    })
+
+    svg.selectAll('Happiness.Rank')
+    .data(top10)
+    .enter()
+    .append('text')
+    .attr('class', 'Happiness.Rank')
+    .attr('x', (r, i) => {
+      return i * 100
+    })
+
+    .attr('y', (r,i) => {
+    let rating = Number(r["Happiness.Score"]).toFixed(2)
+    return 490 - yScale(rating) - 0
+    })
+    .text((r) => {
+      return Number(r["Happiness.Score"]).toFixed(2) + '⭐️'
+    })
+    
+  })
+</script>
+</html>
