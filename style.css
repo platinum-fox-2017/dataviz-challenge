@@ -1,0 +1,19 @@
+.chart {
+    padding: 20px;
+    background-color: orange;
+    color: white;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 10px;
+  
+}
+.map {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+path {
+  stroke: white;
+  stroke-width: 0.25px;
+  fill: grey;
+}
